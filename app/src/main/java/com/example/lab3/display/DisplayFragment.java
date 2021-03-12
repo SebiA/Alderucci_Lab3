@@ -1,5 +1,6 @@
 package com.example.lab3.display;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -16,13 +17,16 @@ import android.widget.TextView;
 
 import com.example.lab3.R;
 import com.example.lab3.model.Country;
+import com.example.lab3.ui.controllers.GetData;
 import com.example.lab3.ui.country_list.CountryListFragment;
+import com.example.lab3.ui.country_list.CountryListViewModel;
 
 import java.util.ArrayList;
 
 public class DisplayFragment extends Fragment {
 
     private DisplayViewModel mViewModel;
+    private CountryListViewModel countriesViewModel;
 
     public static DisplayFragment newInstance() {
         return new DisplayFragment();
@@ -32,7 +36,7 @@ public class DisplayFragment extends Fragment {
     public TextView capitalDisplay;
     public TextView regionDisplay;
     public TextView subRegionDisplay;
-    private ArrayList<Country> myCountryList;
+    private MutableLiveData<ArrayList<Country>> myCountryList;
     public Bundle bundle;
 
     @Override
@@ -48,14 +52,12 @@ public class DisplayFragment extends Fragment {
         regionDisplay = view.findViewById(R.id.display_region);
         subRegionDisplay = view.findViewById(R.id.display_subRegion);
         bundle = getArguments();
-        String myName = bundle.getString("name");
-        String myCapital = bundle.getString("capital");
-        String myRegion = bundle.getString("region");
-        String mySubRegion = bundle.getString("subregion");
-        nameDisplay.setText(myName);
-        capitalDisplay.setText(myCapital);
-        regionDisplay.setText(myRegion);
-        subRegionDisplay.setText(mySubRegion);
+        int position = bundle.getInt("card");
+        Country country = GetData.sCountryList.get(position);
+        nameDisplay.setText(country.name);
+        capitalDisplay.setText(country.capital);
+        regionDisplay.setText(country.region);
+        subRegionDisplay.setText(country.subRegion);
     }
 
     @Override

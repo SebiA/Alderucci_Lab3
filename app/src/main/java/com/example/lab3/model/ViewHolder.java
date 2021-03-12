@@ -1,5 +1,6 @@
 package com.example.lab3.model;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private String TAG = "VIEW_HOLDER";
-
+    private Bundle bundle;
     public TextView name;
     public TextView capital;
     public TextView region;
@@ -29,6 +30,8 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     @Override
     public void onClick(View view) {
         Log.i(TAG, "clicked" + view.toString());
+        bundle = new Bundle();
+        bundle.putInt("card", getAdapterPosition());
         Navigation.findNavController(itemView).navigate(R.id.action_navigation_notifications_to_displayFragment);
     }
 }
